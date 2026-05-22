@@ -84,7 +84,7 @@ export function LandingNavbar() {
             <Link
               href="/signup"
               className="px-4 py-2.5 text-sm font-semibold text-white rounded-lg hover:opacity-90 transition-opacity shadow-sm"
-              style={{ backgroundColor: '#CD1B78' }}
+              style={{ backgroundColor: '#CD1B78', color: 'white' }}
             >
               Get Started Free
             </Link>
@@ -140,7 +140,7 @@ export function LandingNavbar() {
                   <Link
                     href="/signup"
                     className="block w-full text-center px-4 py-2.5 text-sm font-semibold text-white rounded-lg hover:opacity-90 transition-opacity shadow-sm"
-                    style={{ backgroundColor: '#CD1B78' }}
+                    style={{ backgroundColor: '#CD1B78', color: 'white' }}
                     onClick={() => setOpen(false)}
                   >
                     Get Started Free
