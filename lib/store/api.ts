@@ -25,10 +25,8 @@ export interface SignupRequest {
 }
 
 export interface AuthResponse {
-  access_token: string;
-  refresh_token: string;
-  token_type: string;
-  developer: Developer;
+  message: string;
+  email: string;
 }
 
 export interface APIKey {
@@ -68,11 +66,9 @@ export const apiSlice = createApi({
   reducerPath: 'api',
   baseQuery: fetchBaseQuery({
     baseUrl: process.env.NEXT_PUBLIC_API_URL || 'https://sdk-gateway.urisocial.com',
+    credentials: 'include', // Include cookies in requests
     prepareHeaders: (headers) => {
-      const token = typeof window !== 'undefined' ? localStorage.getItem('access_token') : null;
-      if (token) {
-        headers.set('Authorization', `Bearer ${token}`);
-      }
+      headers.set('Content-Type', 'application/json');
       return headers;
     },
   }),
@@ -96,7 +92,7 @@ export const apiSlice = createApi({
 
     // Developer endpoints
     getCurrentDeveloper: builder.query<Developer, void>({
-      query: () => '/api/v1/developers/me',
+      query: () => '/api/v1/auth/me',
       providesTags: ['Developer'],
     }),
 

@@ -75,14 +75,14 @@ export function LandingNavbar() {
           {/* Right Side Actions */}
           <div className="hidden lg:flex items-center gap-3">
             <Link
-              href="https://dashboard.urisocial.com"
+              href="/login"
               className="text-sm font-semibold text-gray-700 hover:text-pink-700 transition-colors px-3 py-2"
             >
               Sign In
             </Link>
 
             <Link
-              href="https://dashboard.urisocial.com"
+              href="/signup"
               className="px-4 py-2.5 text-sm font-semibold text-white rounded-lg hover:opacity-90 transition-opacity shadow-sm"
               style={{ backgroundColor: '#CD1B78' }}
             >
@@ -131,14 +131,14 @@ export function LandingNavbar() {
                 {/* Auth Buttons */}
                 <div className="pt-3 mt-3 border-t border-gray-100 space-y-2 px-2">
                   <Link
-                    href="https://dashboard.urisocial.com"
+                    href="/login"
                     className="block w-full text-center px-4 py-2.5 text-sm font-semibold text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
                     onClick={() => setOpen(false)}
                   >
                     Sign In
                   </Link>
                   <Link
-                    href="https://dashboard.urisocial.com"
+                    href="/signup"
                     className="block w-full text-center px-4 py-2.5 text-sm font-semibold text-white rounded-lg hover:opacity-90 transition-opacity shadow-sm"
                     style={{ backgroundColor: '#CD1B78' }}
                     onClick={() => setOpen(false)}

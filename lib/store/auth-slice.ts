@@ -3,14 +3,10 @@ import type { Developer } from './api';
 
 interface AuthState {
   developer: Developer | null;
-  accessToken: string | null;
-  refreshToken: string | null;
 }
 
 const initialState: AuthState = {
   developer: null,
-  accessToken: null,
-  refreshToken: null,
 };
 
 const authSlice = createSlice({
@@ -19,28 +15,14 @@ const authSlice = createSlice({
   reducers: {
     setCredentials: (
       state,
-      action: PayloadAction<{ developer: Developer; accessToken: string; refreshToken: string }>
+      action: PayloadAction<{ developer: Developer }>
     ) => {
       state.developer = action.payload.developer;
-      state.accessToken = action.payload.accessToken;
-      state.refreshToken = action.payload.refreshToken;
-
-      // Store in localStorage
-      if (typeof window !== 'undefined') {
-        localStorage.setItem('access_token', action.payload.accessToken);
-        localStorage.setItem('refresh_token', action.payload.refreshToken);
-      }
+      // Tokens are stored in HttpOnly cookies by the server
     },
     logout: (state) => {
       state.developer = null;
-      state.accessToken = null;
-      state.refreshToken = null;
-
-      // Clear localStorage
-      if (typeof window !== 'undefined') {
-        localStorage.removeItem('access_token');
-        localStorage.removeItem('refresh_token');
-      }
+      // Cookies will be cleared by the logout API call
     },
   },
 });

@@ -30,14 +30,22 @@ export default function SignupPage() {
     setError('');
 
     try {
-      const result = await signup(formData).unwrap();
+      // Signup - cookies are set automatically by the server
+      await signup(formData).unwrap();
 
-      // Store credentials in Redux and localStorage
-      dispatch(setCredentials({
-        developer: result.developer,
-        accessToken: result.access_token,
-        refreshToken: result.refresh_token,
-      }));
+      // Fetch developer profile using the cookie
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'https://sdk-gateway.urisocial.com'}/api/v1/auth/me`, {
+        credentials: 'include', // Include cookies
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to fetch profile');
+      }
+
+      const developer = await response.json();
+
+      // Store developer in Redux
+      dispatch(setCredentials({ developer }));
 
       // Redirect to dashboard
       router.push('/dashboard');

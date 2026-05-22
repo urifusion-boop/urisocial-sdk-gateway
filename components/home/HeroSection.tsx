@@ -28,14 +28,14 @@ export function HeroSection() {
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <Button asChild size="lg" className="comic-btn text-base" style={{ backgroundColor: '#CD1B78' }}>
-              <Link href="/docs">
-                Get Started
+              <Link href="/signup">
+                Get Started Free
                 <ArrowRight className="ml-2 w-5 h-5" />
               </Link>
             </Button>
             <Button asChild size="lg" variant="outline" className="text-base">
-              <Link href="/playground">
-                Try Playground
+              <Link href="/docs">
+                View Documentation
               </Link>
             </Button>
           </div>
