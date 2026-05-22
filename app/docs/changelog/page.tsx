@@ -67,60 +67,68 @@ export default function ChangelogPage() {
 
   const getChangeBadge = (type: string) => {
     const badges: Record<string, { label: string; className: string }> = {
-      feature: { label: 'New', className: 'bg-green-100 text-green-700' },
-      fix: { label: 'Fix', className: 'bg-red-100 text-red-700' },
-      improvement: { label: 'Improved', className: 'bg-blue-100 text-blue-700' },
-      security: { label: 'Security', className: 'bg-purple-100 text-purple-700' },
-      breaking: { label: 'Breaking', className: 'bg-orange-100 text-orange-700' },
+      feature: { label: 'New', className: 'bg-green-100 text-green-700 border-green-200' },
+      fix: { label: 'Fix', className: 'bg-red-100 text-red-700 border-red-200' },
+      improvement: { label: 'Improved', className: 'bg-blue-100 text-blue-700 border-blue-200' },
+      security: { label: 'Security', className: 'bg-purple-100 text-purple-700 border-purple-200' },
+      breaking: { label: 'Breaking', className: 'bg-orange-100 text-orange-700 border-orange-200' },
     };
 
     const badge = badges[type];
     return (
-      <Badge className={badge.className} variant="outline">
+      <Badge className={`${badge.className} text-[11px] font-semibold px-2 py-0.5`} variant="outline">
         {badge.label}
       </Badge>
     );
   };
 
   return (
-    <div>
+    <div className="pb-10">
       {/* Header */}
-      <div className="mb-8">
-        <Badge className="mb-4" style={{ backgroundColor: '#CD1B78' }}>
+      <div className="mb-12 pt-6">
+        <h1 className="text-4xl md:text-5xl font-semibold text-gray-900 mb-4 leading-tight tracking-tight">
           Changelog
-        </Badge>
-        <h1 className="text-4xl font-extrabold text-gray-900 mb-4">Changelog</h1>
-        <p className="text-xl text-gray-600 mb-6">
+        </h1>
+        <p className="text-base md:text-lg text-gray-600 mb-6 leading-relaxed">
           Stay up to date with the latest features, improvements, and bug fixes to URI Social SDK.
         </p>
       </div>
 
       {/* Releases */}
-      <div className="space-y-8">
+      <div className="space-y-6 mb-12">
         {releases.map((release) => (
-          <Card key={release.version} className={release.isNew ? 'border-pink-300 shadow-md' : ''}>
-            <CardHeader>
-              <div className="flex items-center justify-between mb-2">
+          <Card
+            key={release.version}
+            className={
+              release.isNew
+                ? '!ring-2 !ring-pink-200 bg-white shadow-md hover:shadow-lg transition-all duration-200'
+                : '!ring-1 !ring-gray-100 bg-white shadow-sm hover:!ring-pink-200 hover:shadow-md transition-all duration-200'
+            }
+          >
+            <CardHeader className="pb-4">
+              <div className="flex items-center justify-between flex-wrap gap-3">
                 <div className="flex items-center gap-3">
-                  <CardTitle className="text-2xl">v{release.version}</CardTitle>
+                  <CardTitle className="text-2xl font-semibold text-gray-900">v{release.version}</CardTitle>
                   {release.isNew && (
-                    <Badge style={{ backgroundColor: '#CD1B78' }} className="flex items-center gap-1">
-                      <Sparkles className="w-3 h-3" />
+                    <Badge className="flex items-center gap-1.5 px-2.5 py-1 text-[11px] font-semibold text-white shadow-sm" style={{ backgroundColor: '#CD1B78' }}>
+                      <Sparkles className="w-3.5 h-3.5" />
                       Latest
                     </Badge>
                   )}
                 </div>
-                <span className="text-sm text-gray-500">{release.date}</span>
+                <span className="text-[14px] text-gray-500 font-medium">{release.date}</span>
               </div>
             </CardHeader>
-            <CardContent>
-              <ul className="space-y-3">
+            <CardContent className="pt-0">
+              <ul className="space-y-2.5">
                 {release.changes.map((change, index) => (
-                  <li key={index} className="flex items-start gap-3">
-                    {getChangeIcon(change.type)}
-                    <div className="flex-1 flex items-center gap-2">
-                      <span className="text-gray-700">{change.text}</span>
-                      <div className="ml-auto">
+                  <li key={index} className="flex items-start gap-3 p-2.5 rounded-md hover:bg-gray-50 transition-colors">
+                    <div className="mt-0.5 flex-shrink-0">
+                      {getChangeIcon(change.type)}
+                    </div>
+                    <div className="flex-1 flex items-center justify-between gap-3">
+                      <span className="text-[15px] text-gray-700 leading-snug">{change.text}</span>
+                      <div className="flex-shrink-0">
                         {getChangeBadge(change.type)}
                       </div>
                     </div>
@@ -133,21 +141,23 @@ export default function ChangelogPage() {
       </div>
 
       {/* Subscribe CTA */}
-      <Card className="mt-12 bg-gradient-to-r from-pink-50 to-purple-50 border-pink-200">
-        <CardContent className="p-6 text-center">
-          <Sparkles className="w-12 h-12 text-pink-600 mx-auto mb-4" />
-          <h3 className="text-xl font-bold text-gray-900 mb-2">Stay Updated</h3>
-          <p className="text-gray-600 mb-4">
-            Get notified about new releases, features, and important updates.
+      <Card className="!ring-1 !ring-pink-100 bg-pink-50 shadow-sm">
+        <CardContent className="p-8 text-center">
+          <div className="w-14 h-14 rounded-xl mx-auto mb-5 flex items-center justify-center shadow-md" style={{ backgroundColor: '#CD1B78' }}>
+            <Sparkles className="w-7 h-7 text-white" />
+          </div>
+          <h3 className="text-2xl font-semibold text-gray-900 mb-3">Stay Updated</h3>
+          <p className="text-[15px] text-gray-600 mb-6 max-w-2xl mx-auto leading-relaxed">
+            Get notified about new releases, features, and important updates delivered straight to your inbox.
           </p>
-          <div className="flex gap-2 max-w-md mx-auto">
+          <div className="flex gap-3 max-w-lg mx-auto flex-col sm:flex-row">
             <input
               type="email"
               placeholder="Enter your email"
-              className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-pink-500"
+              className="flex-1 px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-transparent transition-all text-[15px]"
             />
             <button
-              className="px-6 py-2 text-white rounded-lg font-semibold hover:opacity-90 transition-opacity"
+              className="px-6 py-2.5 text-white rounded-lg font-semibold text-[15px] shadow-md hover:shadow-lg transition-all hover:scale-105 whitespace-nowrap"
               style={{ backgroundColor: '#CD1B78' }}
             >
               Subscribe
