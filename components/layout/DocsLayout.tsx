@@ -19,24 +19,24 @@ export function DocsLayout({ children }: { children: React.ReactNode }) {
         <div className="flex min-h-screen w-full">
           <DocsSidebar />
           <SidebarInset>
-            <header className="sticky top-0 z-10 flex h-16 shrink-0 items-center gap-4 border-b border-gray-200 bg-white/80 backdrop-blur-md px-6 shadow-sm">
+            <header className="sticky top-0 z-10 flex h-14 md:h-16 shrink-0 items-center gap-2 md:gap-4 border-b border-gray-200 bg-white/80 backdrop-blur-md px-4 md:px-6 shadow-sm">
               <SidebarTrigger className="-ml-1 hover:bg-gray-100 rounded-lg transition-colors" />
-              <Separator orientation="vertical" className="h-6" />
-              <div className="flex items-center gap-4 flex-1">
+              <Separator orientation="vertical" className="h-4 md:h-6" />
+              <div className="flex items-center gap-2 md:gap-4 flex-1">
                 <div className="relative flex-1 max-w-xl">
-                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
+                  <Search className="absolute left-2 md:left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
                   <Input
                     type="search"
-                    placeholder="Search documentation..."
-                    className="pl-10 h-10 bg-gray-50 border-gray-200 focus:bg-white focus:border-pink-300 transition-all"
+                    placeholder="Search docs..."
+                    className="pl-8 md:pl-10 h-9 md:h-10 bg-gray-50 border-gray-200 focus:bg-white focus:border-pink-300 transition-all text-sm"
                   />
                 </div>
               </div>
-              <div className="flex items-center gap-3">
-                <Button asChild variant="outline" size="sm" className="hidden sm:flex">
+              <div className="flex items-center gap-2 md:gap-3">
+                <Button asChild variant="outline" size="sm" className="hidden md:flex h-9">
                   <a href="/login">Sign In</a>
                 </Button>
-                <Button asChild size="sm" className="text-white shadow-md hover:shadow-lg transition-all" style={{ backgroundColor: '#CD1B78' }}>
+                <Button asChild size="sm" className="text-white shadow-md hover:shadow-lg transition-all h-9 text-xs md:text-sm px-3 md:px-4" style={{ backgroundColor: '#CD1B78' }}>
                   <a href="/signup">Get Started</a>
                 </Button>
               </div>

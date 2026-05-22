@@ -124,8 +124,8 @@ export function DocsSidebar() {
   const pathname = usePathname();
 
   return (
-    <Sidebar collapsible="icon" variant="sidebar" className="border-r border-gray-200">
-      <SidebarHeader className="border-b border-gray-100 pb-4">
+    <Sidebar collapsible="icon" variant="sidebar" className="border-r border-gray-200 bg-white">
+      <SidebarHeader className="border-b border-gray-100 pb-4 bg-white">
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton size="lg" asChild className="hover:bg-transparent">
@@ -151,7 +151,7 @@ export function DocsSidebar() {
         </SidebarMenu>
       </SidebarHeader>
 
-      <SidebarContent className="px-2 py-4">
+      <SidebarContent className="px-2 py-4 bg-white">
         {navigation.map((section, index) => (
           <SidebarGroup key={section.title} className={index > 0 ? 'mt-6' : ''}>
             <SidebarGroupLabel className="px-3 mb-2 text-[11px] font-bold uppercase tracking-wider text-gray-500">
@@ -199,7 +199,7 @@ export function DocsSidebar() {
         ))}
       </SidebarContent>
 
-      <SidebarFooter className="border-t border-gray-100 p-4">
+      <SidebarFooter className="border-t border-gray-100 p-4 bg-white">
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton asChild className="h-auto p-0 hover:bg-transparent">
