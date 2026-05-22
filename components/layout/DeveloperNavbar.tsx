@@ -14,10 +14,19 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import { useAuth } from '@/lib/auth-context';
 
 export function DeveloperNavbar() {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
+  const { developer, logout } = useAuth();
+
+  const getInitials = () => {
+    if (developer?.first_name && developer?.last_name) {
+      return `${developer.first_name[0]}${developer.last_name[0]}`.toUpperCase();
+    }
+    return developer?.email?.[0]?.toUpperCase() || 'U';
+  };
 
   const mainLinks = [
     { href: '/docs', label: 'Docs' },
@@ -84,15 +93,19 @@ export function DeveloperNavbar() {
                     className="w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm"
                     style={{ backgroundColor: '#CD1B78', color: 'white' }}
                   >
-                    U
+                    {getInitials()}
                   </div>
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-56">
                 <DropdownMenuLabel>
                   <div className="flex flex-col">
-                    <span className="font-semibold">Developer Account</span>
-                    <span className="text-xs text-gray-500">developer@example.com</span>
+                    <span className="font-semibold">
+                      {developer?.first_name && developer?.last_name
+                        ? `${developer.first_name} ${developer.last_name}`
+                        : 'Developer Account'}
+                    </span>
+                    <span className="text-xs text-gray-500">{developer?.email || 'developer@example.com'}</span>
                   </div>
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
@@ -109,7 +122,10 @@ export function DeveloperNavbar() {
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem className="flex items-center gap-2 text-red-600 cursor-pointer">
+                <DropdownMenuItem
+                  onClick={logout}
+                  className="flex items-center gap-2 text-red-600 cursor-pointer"
+                >
                   <LogOut className="w-4 h-4" />
                   Sign Out
                 </DropdownMenuItem>

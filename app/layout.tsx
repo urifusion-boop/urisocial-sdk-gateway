@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Urbanist, Geist } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
+import { ReduxProvider } from "@/lib/store/provider";
+import { AuthProvider } from "@/lib/auth-context";
 
 const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 
@@ -23,7 +25,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={cn("font-sans", geist.variable)}>
-      <body className={urbanist.className}>{children}</body>
+      <body className={urbanist.className}>
+        <ReduxProvider>
+          <AuthProvider>{children}</AuthProvider>
+        </ReduxProvider>
+      </body>
     </html>
   );
 }
