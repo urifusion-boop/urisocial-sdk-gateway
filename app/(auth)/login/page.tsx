@@ -26,6 +26,28 @@ export default function LoginPage() {
     e.preventDefault();
     setError('');
 
+    // Client-side validation
+    if (!formData.email.trim()) {
+      setError('Email is required');
+      return;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+      setError('Please enter a valid email address');
+      return;
+    }
+
+    if (!formData.password) {
+      setError('Password is required');
+      return;
+    }
+
+    if (formData.password.length < 8) {
+      setError('Password must be at least 8 characters');
+      return;
+    }
+
     try {
       // Login - cookies are set automatically by the server
       const loginResult = await login(formData).unwrap();

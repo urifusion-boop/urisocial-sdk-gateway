@@ -29,6 +29,54 @@ export default function SignupPage() {
     e.preventDefault();
     setError('');
 
+    // Client-side validation
+    if (!formData.email.trim()) {
+      setError('Email is required');
+      return;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+      setError('Please enter a valid email address');
+      return;
+    }
+
+    if (!formData.password) {
+      setError('Password is required');
+      return;
+    }
+
+    if (formData.password.length < 8) {
+      setError('Password must be at least 8 characters');
+      return;
+    }
+
+    // Password strength validation
+    const hasUpperCase = /[A-Z]/.test(formData.password);
+    const hasLowerCase = /[a-z]/.test(formData.password);
+    const hasNumber = /[0-9]/.test(formData.password);
+
+    if (!hasUpperCase || !hasLowerCase || !hasNumber) {
+      setError('Password must contain at least one uppercase letter, one lowercase letter, and one number');
+      return;
+    }
+
+    // Name validation (optional but if provided, must be valid)
+    if (formData.first_name && formData.first_name.length < 2) {
+      setError('First name must be at least 2 characters');
+      return;
+    }
+
+    if (formData.last_name && formData.last_name.length < 2) {
+      setError('Last name must be at least 2 characters');
+      return;
+    }
+
+    if (formData.company_name && formData.company_name.length < 2) {
+      setError('Company name must be at least 2 characters');
+      return;
+    }
+
     try {
       // Signup - cookies are set automatically by the server
       const signupResult = await signup(formData).unwrap();

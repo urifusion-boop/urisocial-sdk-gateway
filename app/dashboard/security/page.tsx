@@ -29,9 +29,39 @@ export default function SecurityPage() {
     setError('');
     setSuccess(false);
 
-    // Validation
+    // Client-side validation
+    if (!currentPassword) {
+      setError('Current password is required');
+      return;
+    }
+
+    if (currentPassword.length < 8) {
+      setError('Current password must be at least 8 characters');
+      return;
+    }
+
+    if (!newPassword) {
+      setError('New password is required');
+      return;
+    }
+
     if (newPassword.length < 8) {
       setError('New password must be at least 8 characters');
+      return;
+    }
+
+    // Password strength validation
+    const hasUpperCase = /[A-Z]/.test(newPassword);
+    const hasLowerCase = /[a-z]/.test(newPassword);
+    const hasNumber = /[0-9]/.test(newPassword);
+
+    if (!hasUpperCase || !hasLowerCase || !hasNumber) {
+      setError('New password must contain at least one uppercase letter, one lowercase letter, and one number');
+      return;
+    }
+
+    if (!confirmPassword) {
+      setError('Please confirm your new password');
       return;
     }
 

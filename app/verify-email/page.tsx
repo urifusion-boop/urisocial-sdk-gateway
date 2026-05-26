@@ -29,6 +29,34 @@ function VerifyEmailForm() {
   const handleVerify = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
+
+    // Client-side validation
+    if (!email.trim()) {
+      setError('Email is required');
+      return;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      setError('Please enter a valid email address');
+      return;
+    }
+
+    if (!code.trim()) {
+      setError('Verification code is required');
+      return;
+    }
+
+    if (code.length !== 6) {
+      setError('Verification code must be 6 digits');
+      return;
+    }
+
+    if (!/^\d+$/.test(code)) {
+      setError('Verification code must contain only numbers');
+      return;
+    }
+
     setIsLoading(true);
 
     try {
@@ -60,8 +88,15 @@ function VerifyEmailForm() {
   };
 
   const handleResend = async () => {
-    if (!email) {
-      setError('Please enter your email address');
+    // Client-side validation
+    if (!email.trim()) {
+      setError('Email is required');
+      return;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      setError('Please enter a valid email address');
       return;
     }
 

@@ -32,9 +32,55 @@ function ResetPasswordForm() {
     e.preventDefault();
     setError('');
 
-    // Validation
+    // Client-side validation
+    if (!email.trim()) {
+      setError('Email is required');
+      return;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      setError('Please enter a valid email address');
+      return;
+    }
+
+    if (!code.trim()) {
+      setError('Reset code is required');
+      return;
+    }
+
+    if (code.length !== 6) {
+      setError('Reset code must be 6 digits');
+      return;
+    }
+
+    if (!/^\d+$/.test(code)) {
+      setError('Reset code must contain only numbers');
+      return;
+    }
+
+    if (!newPassword) {
+      setError('New password is required');
+      return;
+    }
+
     if (newPassword.length < 8) {
       setError('Password must be at least 8 characters');
+      return;
+    }
+
+    // Password strength validation
+    const hasUpperCase = /[A-Z]/.test(newPassword);
+    const hasLowerCase = /[a-z]/.test(newPassword);
+    const hasNumber = /[0-9]/.test(newPassword);
+
+    if (!hasUpperCase || !hasLowerCase || !hasNumber) {
+      setError('Password must contain at least one uppercase letter, one lowercase letter, and one number');
+      return;
+    }
+
+    if (!confirmPassword) {
+      setError('Please confirm your password');
       return;
     }
 
