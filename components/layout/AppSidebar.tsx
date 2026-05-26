@@ -17,6 +17,7 @@ import {
   ChevronDown,
   LifeBuoy,
   CreditCard,
+  Shield,
 } from 'lucide-react';
 import {
   Sidebar,
@@ -73,6 +74,7 @@ const navigation: NavSection[] = [
       { title: 'API Keys', href: '/dashboard/keys', icon: Key },
       { title: 'Usage & Billing', href: '/dashboard/usage', icon: BarChart3 },
       { title: 'Team', href: '/dashboard/team', icon: Users },
+      { title: 'Security', href: '/dashboard/security', icon: Shield },
       { title: 'Settings', href: '/dashboard/settings', icon: Settings },
     ],
   },

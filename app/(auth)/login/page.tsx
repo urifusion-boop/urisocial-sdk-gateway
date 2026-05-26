@@ -28,7 +28,14 @@ export default function LoginPage() {
 
     try {
       // Login - cookies are set automatically by the server
-      await login(formData).unwrap();
+      const loginResult = await login(formData).unwrap();
+
+      // Check if email verification is required (for new users who haven't verified yet)
+      if (loginResult.requires_verification) {
+        // Redirect to verify-email page - backend already sent a new verification code
+        router.push(`/verify-email?email=${encodeURIComponent(formData.email)}`);
+        return;
+      }
 
       // Fetch developer profile using the cookie
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'https://sdk-gateway.urisocial.com'}/api/v1/auth/me`, {

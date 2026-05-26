@@ -31,7 +31,14 @@ export default function SignupPage() {
 
     try {
       // Signup - cookies are set automatically by the server
-      await signup(formData).unwrap();
+      const signupResult = await signup(formData).unwrap();
+
+      // Check if email verification is required
+      if (signupResult.requires_verification) {
+        // Redirect to verify-email page
+        router.push(`/verify-email?email=${encodeURIComponent(formData.email)}`);
+        return;
+      }
 
       // Fetch developer profile using the cookie
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'https://sdk-gateway.urisocial.com'}/api/v1/auth/me`, {
