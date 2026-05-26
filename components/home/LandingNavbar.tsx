@@ -4,14 +4,25 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
-import { Menu, X, BookOpen, Code, Zap, Package, FileCode } from 'lucide-react';
+import { Menu, X, BookOpen, Code, Zap, Package, FileCode, User, Settings, LogOut, Copy, Check, ChevronDown, LayoutDashboard, Shield, Key } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import { useAuth } from '@/lib/auth-context';
 
 export function LandingNavbar() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [copied, setCopied] = useState(false);
   const pathname = usePathname();
+  const { developer, isLoading, logout } = useAuth();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -29,6 +40,28 @@ export function LandingNavbar() {
     { href: '/widgets', label: 'Widgets', icon: Package },
     { href: '/examples', label: 'Examples', icon: FileCode },
   ];
+
+  const handleCopyEmail = () => {
+    if (developer?.email) {
+      navigator.clipboard.writeText(developer.email);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    }
+  };
+
+  const getInitials = () => {
+    if (developer?.first_name && developer?.last_name) {
+      return `${developer.first_name[0]}${developer.last_name[0]}`.toUpperCase();
+    }
+    return developer?.email?.[0]?.toUpperCase() || 'U';
+  };
+
+  const getDisplayName = () => {
+    if (developer?.first_name && developer?.last_name) {
+      return `${developer.first_name} ${developer.last_name}`;
+    }
+    return developer?.email?.split('@')[0] || 'User';
+  };
 
   return (
     <motion.nav
@@ -74,20 +107,92 @@ export function LandingNavbar() {
 
           {/* Right Side Actions */}
           <div className="hidden lg:flex items-center gap-3">
-            <Link
-              href="/login"
-              className="text-sm font-semibold text-gray-700 hover:text-pink-700 transition-colors px-3 py-2"
-            >
-              Sign In
-            </Link>
+            {!isLoading && developer ? (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <button className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gray-100 transition-colors">
+                    <div
+                      className="flex items-center justify-center w-9 h-9 rounded-full text-white font-bold text-sm"
+                      style={{ backgroundColor: '#CD1B78' }}
+                    >
+                      {getInitials()}
+                    </div>
+                    <div className="text-left">
+                      <div className="text-sm font-semibold text-gray-900">{getDisplayName()}</div>
+                      <div className="text-xs text-gray-500">{developer.email}</div>
+                    </div>
+                    <ChevronDown className="w-4 h-4 text-gray-500" />
+                  </button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-64">
+                  <DropdownMenuLabel>
+                    <div className="flex flex-col">
+                      <span className="font-semibold">{getDisplayName()}</span>
+                      <div className="flex items-center gap-2 mt-1">
+                        <span className="text-xs text-gray-500 font-normal">{developer.email}</span>
+                        <button
+                          onClick={handleCopyEmail}
+                          className="text-gray-400 hover:text-pink-600 transition-colors"
+                        >
+                          {copied ? (
+                            <Check className="w-3 h-3 text-green-600" />
+                          ) : (
+                            <Copy className="w-3 h-3" />
+                          )}
+                        </button>
+                      </div>
+                    </div>
+                  </DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem asChild>
+                    <Link href="/dashboard" className="cursor-pointer">
+                      <LayoutDashboard className="mr-2 h-4 w-4" />
+                      Dashboard
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link href="/dashboard/keys" className="cursor-pointer">
+                      <Key className="mr-2 h-4 w-4" />
+                      API Keys
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link href="/dashboard/security" className="cursor-pointer">
+                      <Shield className="mr-2 h-4 w-4" />
+                      Security
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link href="/dashboard/settings" className="cursor-pointer">
+                      <Settings className="mr-2 h-4 w-4" />
+                      Settings
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem onClick={logout} className="cursor-pointer text-red-600">
+                    <LogOut className="mr-2 h-4 w-4" />
+                    Log out
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            ) : (
+              <>
+                <Link
+                  href="/login"
+                  className="text-sm font-semibold text-gray-700 hover:text-pink-700 transition-colors px-3 py-2"
+                >
+                  Sign In
+                </Link>
 
-            <Link
-              href="/signup"
-              className="px-4 py-2.5 text-sm font-semibold text-white rounded-lg hover:opacity-90 transition-opacity shadow-sm"
-              style={{ backgroundColor: '#CD1B78', color: 'white' }}
-            >
-              Get Started Free
-            </Link>
+                <Link
+                  href="/signup"
+                  className="px-4 py-2.5 text-sm font-semibold text-white rounded-lg hover:opacity-90 transition-opacity shadow-sm"
+                  style={{ backgroundColor: '#CD1B78', color: 'white' }}
+                >
+                  Get Started Free
+                </Link>
+              </>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
@@ -128,23 +233,100 @@ export function LandingNavbar() {
                   </Link>
                 ))}
 
-                {/* Auth Buttons */}
-                <div className="pt-3 mt-3 border-t border-gray-100 space-y-2 px-2">
-                  <Link
-                    href="/login"
-                    className="block w-full text-center px-4 py-2.5 text-sm font-semibold text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
-                    onClick={() => setOpen(false)}
-                  >
-                    Sign In
-                  </Link>
-                  <Link
-                    href="/signup"
-                    className="block w-full text-center px-4 py-2.5 text-sm font-semibold text-white rounded-lg hover:opacity-90 transition-opacity shadow-sm"
-                    style={{ backgroundColor: '#CD1B78', color: 'white' }}
-                    onClick={() => setOpen(false)}
-                  >
-                    Get Started Free
-                  </Link>
+                {/* Auth Buttons / Profile */}
+                <div className="pt-3 mt-3 border-t border-gray-100 px-2">
+                  {!isLoading && developer ? (
+                    <div className="space-y-2">
+                      {/* User Info */}
+                      <div className="flex items-center gap-3 px-4 py-3 bg-gray-50 rounded-lg">
+                        <div
+                          className="flex items-center justify-center w-10 h-10 rounded-full text-white font-bold text-sm"
+                          style={{ backgroundColor: '#CD1B78' }}
+                        >
+                          {getInitials()}
+                        </div>
+                        <div className="flex-1">
+                          <div className="text-sm font-semibold text-gray-900">{getDisplayName()}</div>
+                          <div className="flex items-center gap-2">
+                            <span className="text-xs text-gray-500">{developer.email}</span>
+                            <button
+                              onClick={handleCopyEmail}
+                              className="text-gray-400 hover:text-pink-600 transition-colors"
+                            >
+                              {copied ? (
+                                <Check className="w-3 h-3 text-green-600" />
+                              ) : (
+                                <Copy className="w-3 h-3" />
+                              )}
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Quick Links */}
+                      <Link
+                        href="/dashboard"
+                        onClick={() => setOpen(false)}
+                        className="flex items-center gap-3 px-4 py-2.5 text-sm font-semibold text-gray-700 hover:bg-gray-50 transition-colors rounded-lg"
+                      >
+                        <LayoutDashboard size={18} />
+                        Dashboard
+                      </Link>
+                      <Link
+                        href="/dashboard/keys"
+                        onClick={() => setOpen(false)}
+                        className="flex items-center gap-3 px-4 py-2.5 text-sm font-semibold text-gray-700 hover:bg-gray-50 transition-colors rounded-lg"
+                      >
+                        <Key size={18} />
+                        API Keys
+                      </Link>
+                      <Link
+                        href="/dashboard/security"
+                        onClick={() => setOpen(false)}
+                        className="flex items-center gap-3 px-4 py-2.5 text-sm font-semibold text-gray-700 hover:bg-gray-50 transition-colors rounded-lg"
+                      >
+                        <Shield size={18} />
+                        Security
+                      </Link>
+                      <Link
+                        href="/dashboard/settings"
+                        onClick={() => setOpen(false)}
+                        className="flex items-center gap-3 px-4 py-2.5 text-sm font-semibold text-gray-700 hover:bg-gray-50 transition-colors rounded-lg"
+                      >
+                        <Settings size={18} />
+                        Settings
+                      </Link>
+
+                      <button
+                        onClick={() => {
+                          logout();
+                          setOpen(false);
+                        }}
+                        className="flex items-center gap-3 w-full px-4 py-2.5 text-sm font-semibold text-red-600 hover:bg-red-50 transition-colors rounded-lg"
+                      >
+                        <LogOut size={18} />
+                        Log out
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="space-y-2">
+                      <Link
+                        href="/login"
+                        className="block w-full text-center px-4 py-2.5 text-sm font-semibold text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+                        onClick={() => setOpen(false)}
+                      >
+                        Sign In
+                      </Link>
+                      <Link
+                        href="/signup"
+                        className="block w-full text-center px-4 py-2.5 text-sm font-semibold text-white rounded-lg hover:opacity-90 transition-opacity shadow-sm"
+                        style={{ backgroundColor: '#CD1B78', color: 'white' }}
+                        onClick={() => setOpen(false)}
+                      >
+                        Get Started Free
+                      </Link>
+                    </div>
+                  )}
                 </div>
               </div>
             </motion.div>
