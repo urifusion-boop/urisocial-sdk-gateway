@@ -124,15 +124,19 @@ export function LandingNavbar() {
                     <ChevronDown className="w-4 h-4 text-gray-500" />
                   </button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-64">
-                  <DropdownMenuLabel>
+                <DropdownMenuContent
+                  align="end"
+                  className="w-64 bg-white border border-gray-200 shadow-xl rounded-xl p-2"
+                  sideOffset={8}
+                >
+                  <DropdownMenuLabel className="px-3 py-2.5 bg-gray-50 rounded-lg mb-2">
                     <div className="flex flex-col">
-                      <span className="font-semibold">{getDisplayName()}</span>
+                      <span className="font-semibold text-gray-900">{getDisplayName()}</span>
                       <div className="flex items-center gap-2 mt-1">
-                        <span className="text-xs text-gray-500 font-normal">{developer.email}</span>
+                        <span className="text-xs text-gray-500 font-normal truncate">{developer.email}</span>
                         <button
                           onClick={handleCopyEmail}
-                          className="text-gray-400 hover:text-pink-600 transition-colors"
+                          className="text-gray-400 hover:text-pink-600 transition-colors flex-shrink-0"
                         >
                           {copied ? (
                             <Check className="w-3 h-3 text-green-600" />
@@ -143,35 +147,40 @@ export function LandingNavbar() {
                       </div>
                     </div>
                   </DropdownMenuLabel>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem asChild>
-                    <Link href="/dashboard" className="cursor-pointer">
-                      <LayoutDashboard className="mr-2 h-4 w-4" />
+                  <DropdownMenuSeparator className="my-2 bg-gray-200" />
+                  <DropdownMenuItem asChild className="rounded-lg cursor-pointer hover:bg-gray-100 transition-colors">
+                    <Link href="/dashboard" className="flex items-center px-3 py-2 text-gray-700 font-medium">
+                      <LayoutDashboard className="mr-3 h-4 w-4" />
                       Dashboard
                     </Link>
                   </DropdownMenuItem>
-                  <DropdownMenuItem asChild>
-                    <Link href="/dashboard/keys" className="cursor-pointer">
-                      <Key className="mr-2 h-4 w-4" />
+                  <DropdownMenuItem asChild className="rounded-lg cursor-pointer hover:bg-gray-100 transition-colors">
+                    <Link href="/dashboard/keys" className="flex items-center px-3 py-2 text-gray-700 font-medium">
+                      <Key className="mr-3 h-4 w-4" />
                       API Keys
                     </Link>
                   </DropdownMenuItem>
-                  <DropdownMenuItem asChild>
-                    <Link href="/dashboard/security" className="cursor-pointer">
-                      <Shield className="mr-2 h-4 w-4" />
+                  <DropdownMenuItem asChild className="rounded-lg cursor-pointer hover:bg-gray-100 transition-colors">
+                    <Link href="/dashboard/security" className="flex items-center px-3 py-2 text-gray-700 font-medium">
+                      <Shield className="mr-3 h-4 w-4" />
                       Security
                     </Link>
                   </DropdownMenuItem>
-                  <DropdownMenuItem asChild>
-                    <Link href="/dashboard/settings" className="cursor-pointer">
-                      <Settings className="mr-2 h-4 w-4" />
+                  <DropdownMenuItem asChild className="rounded-lg cursor-pointer hover:bg-gray-100 transition-colors">
+                    <Link href="/dashboard/settings" className="flex items-center px-3 py-2 text-gray-700 font-medium">
+                      <Settings className="mr-3 h-4 w-4" />
                       Settings
                     </Link>
                   </DropdownMenuItem>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem onClick={logout} className="cursor-pointer text-red-600">
-                    <LogOut className="mr-2 h-4 w-4" />
-                    Log out
+                  <DropdownMenuSeparator className="my-2 bg-gray-200" />
+                  <DropdownMenuItem
+                    onClick={logout}
+                    className="rounded-lg cursor-pointer hover:bg-red-50 transition-colors text-red-600 font-medium"
+                  >
+                    <div className="flex items-center px-3 py-2 w-full">
+                      <LogOut className="mr-3 h-4 w-4" />
+                      Log out
+                    </div>
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>

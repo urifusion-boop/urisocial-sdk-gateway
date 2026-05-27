@@ -1,6 +1,26 @@
+'use client';
+
 import { LandingNavbar } from '@/components/home/LandingNavbar';
+import { useAppSelector } from '@/lib/store/hooks';
+import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 
 export default function AuthLayout({ children }: { children: React.ReactNode }) {
+  const router = useRouter();
+  const { developer } = useAppSelector((state) => state.auth);
+
+  // Redirect to dashboard if already logged in
+  useEffect(() => {
+    if (developer) {
+      router.push('/dashboard');
+    }
+  }, [developer, router]);
+
+  // Don't render auth pages if already logged in
+  if (developer) {
+    return null;
+  }
+
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Navbar */}
