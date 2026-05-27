@@ -97,57 +97,46 @@ export default function SecurityPage() {
 
   return (
     <DeveloperLayout>
-      <div className="max-w-3xl">
-        {/* Header */}
-        <div className="mb-8">
-          <Badge className="mb-4" style={{ backgroundColor: '#CD1B78' }}>
-            Security
-          </Badge>
-          <h1 className="text-4xl font-extrabold text-gray-900 mb-4">Security Settings</h1>
-          <p className="text-xl text-gray-600">
-            Manage your password and account security preferences.
-          </p>
-        </div>
-
+      <div className="space-y-4 md:space-y-6 max-w-3xl">
         {/* Success Alert */}
         {success && (
-          <Alert className="mb-6 bg-green-50 border-green-200">
-            <CheckCircle2 className="h-4 w-4 text-green-600" />
-            <AlertDescription className="text-green-800">
+          <Alert className="bg-green-50 border-green-200">
+            <CheckCircle2 className="h-4 w-4 text-green-600 flex-shrink-0" />
+            <AlertDescription className="text-green-800 text-sm">
               Password changed successfully! Redirecting...
             </AlertDescription>
           </Alert>
         )}
 
         {/* Change Password */}
-        <Card className="mb-8">
-          <CardHeader>
-            <div className="flex items-center gap-3">
+        <Card className="bg-white border border-gray-200 shadow-sm">
+          <CardHeader className="p-4">
+            <div className="flex items-center gap-2.5">
               <div
-                className="w-10 h-10 rounded-lg flex items-center justify-center"
+                className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0"
                 style={{ backgroundColor: '#CD1B7820' }}
               >
-                <Lock className="w-5 h-5" style={{ color: '#CD1B78' }} />
+                <Lock className="w-4 h-4" style={{ color: '#CD1B78' }} />
               </div>
-              <div>
-                <CardTitle>Change Password</CardTitle>
-                <CardDescription>Update your password to keep your account secure</CardDescription>
+              <div className="min-w-0">
+                <CardTitle className="text-base md:text-lg">Change Password</CardTitle>
+                <CardDescription className="text-xs md:text-sm">Update your password to keep your account secure</CardDescription>
               </div>
             </div>
           </CardHeader>
-          <CardContent>
+          <CardContent className="p-4 pt-0">
             {/* Error Alert */}
             {error && (
-              <Alert variant="destructive" className="mb-6">
-                <AlertCircle className="h-4 w-4" />
-                <AlertDescription>{error}</AlertDescription>
+              <Alert variant="destructive" className="mb-4">
+                <AlertCircle className="h-4 w-4 flex-shrink-0" />
+                <AlertDescription className="text-sm">{error}</AlertDescription>
               </Alert>
             )}
 
-            <form onSubmit={handleChangePassword} className="space-y-5">
+            <form onSubmit={handleChangePassword} className="space-y-4">
               {/* Current Password */}
-              <div className="space-y-2">
-                <Label htmlFor="current-password">Current Password</Label>
+              <div className="space-y-1.5">
+                <Label htmlFor="current-password" className="text-sm font-medium">Current Password</Label>
                 <div className="relative">
                   <Input
                     id="current-password"
@@ -157,12 +146,12 @@ export default function SecurityPage() {
                     onChange={(e) => setCurrentPassword(e.target.value)}
                     required
                     disabled={isLoading}
-                    className="h-11 pr-10"
+                    className="h-9 md:h-10 pr-10 text-sm"
                   />
                   <button
                     type="button"
                     onClick={() => setShowCurrentPassword(!showCurrentPassword)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                    className="absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
                   >
                     {showCurrentPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                   </button>
@@ -170,8 +159,8 @@ export default function SecurityPage() {
               </div>
 
               {/* New Password */}
-              <div className="space-y-2">
-                <Label htmlFor="new-password">New Password</Label>
+              <div className="space-y-1.5">
+                <Label htmlFor="new-password" className="text-sm font-medium">New Password</Label>
                 <div className="relative">
                   <Input
                     id="new-password"
@@ -181,12 +170,12 @@ export default function SecurityPage() {
                     onChange={(e) => setNewPassword(e.target.value)}
                     required
                     disabled={isLoading}
-                    className="h-11 pr-10"
+                    className="h-9 md:h-10 pr-10 text-sm"
                   />
                   <button
                     type="button"
                     onClick={() => setShowNewPassword(!showNewPassword)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                    className="absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
                   >
                     {showNewPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                   </button>
@@ -194,8 +183,8 @@ export default function SecurityPage() {
               </div>
 
               {/* Confirm Password */}
-              <div className="space-y-2">
-                <Label htmlFor="confirm-password">Confirm New Password</Label>
+              <div className="space-y-1.5">
+                <Label htmlFor="confirm-password" className="text-sm font-medium">Confirm New Password</Label>
                 <div className="relative">
                   <Input
                     id="confirm-password"
@@ -205,12 +194,12 @@ export default function SecurityPage() {
                     onChange={(e) => setConfirmPassword(e.target.value)}
                     required
                     disabled={isLoading}
-                    className="h-11 pr-10"
+                    className="h-9 md:h-10 pr-10 text-sm"
                   />
                   <button
                     type="button"
                     onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                    className="absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
                   >
                     {showConfirmPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                   </button>
@@ -220,7 +209,8 @@ export default function SecurityPage() {
               <Button
                 type="submit"
                 disabled={isLoading || success}
-                className="w-full h-11 text-base font-semibold"
+                size="sm"
+                className="w-full text-white font-semibold shadow-sm"
                 style={{ backgroundColor: '#CD1B78' }}
               >
                 {isLoading ? 'Changing Password...' : 'Change Password'}
@@ -230,23 +220,23 @@ export default function SecurityPage() {
         </Card>
 
         {/* Security Tips */}
-        <Card>
-          <CardHeader>
-            <div className="flex items-center gap-3">
+        <Card className="bg-white border border-gray-200 shadow-sm">
+          <CardHeader className="p-4">
+            <div className="flex items-center gap-2.5">
               <div
-                className="w-10 h-10 rounded-lg flex items-center justify-center"
+                className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0"
                 style={{ backgroundColor: '#CD1B7820' }}
               >
-                <Shield className="w-5 h-5" style={{ color: '#CD1B78' }} />
+                <Shield className="w-4 h-4" style={{ color: '#CD1B78' }} />
               </div>
-              <div>
-                <CardTitle>Security Tips</CardTitle>
-                <CardDescription>Keep your account safe</CardDescription>
+              <div className="min-w-0">
+                <CardTitle className="text-base md:text-lg">Security Tips</CardTitle>
+                <CardDescription className="text-xs md:text-sm">Keep your account safe</CardDescription>
               </div>
             </div>
           </CardHeader>
-          <CardContent>
-            <ul className="space-y-3">
+          <CardContent className="p-4 pt-0">
+            <ul className="space-y-2 md:space-y-2.5">
               {[
                 'Use a strong password with at least 8 characters',
                 'Include a mix of uppercase, lowercase, numbers, and symbols',
@@ -255,11 +245,11 @@ export default function SecurityPage() {
                 'Change your password regularly (every 90 days)',
                 'Use a unique password for each account',
               ].map((tip, i) => (
-                <li key={i} className="flex items-start gap-3">
-                  <div className="w-6 h-6 rounded-full bg-pink-100 flex items-center justify-center flex-shrink-0 mt-0.5">
-                    <span className="text-xs font-bold text-pink-600">{i + 1}</span>
+                <li key={i} className="flex items-start gap-2 md:gap-3">
+                  <div className="w-5 h-5 md:w-6 md:h-6 rounded-full bg-pink-100 flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <span className="text-[10px] md:text-xs font-bold text-pink-600">{i + 1}</span>
                   </div>
-                  <span className="text-gray-700">{tip}</span>
+                  <span className="text-gray-700 text-xs md:text-sm">{tip}</span>
                 </li>
               ))}
             </ul>
