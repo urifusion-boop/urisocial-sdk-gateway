@@ -44,7 +44,7 @@ export default function DashboardPage() {
   ];
 
   return (
-    <div className="max-w-7xl space-y-6">
+    <div className="space-y-6">
       {/* Welcome Section */}
       <div>
         <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-1">

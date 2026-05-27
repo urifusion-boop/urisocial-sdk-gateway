@@ -52,7 +52,7 @@ export default function APIKeysPage() {
 
   return (
     <DeveloperLayout>
-      <div className="max-w-5xl space-y-4 md:space-y-6">
+      <div className="space-y-4 md:space-y-6">
         {/* Header */}
         <div>
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">

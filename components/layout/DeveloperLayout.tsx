@@ -71,10 +71,8 @@ export function DeveloperLayout({ children }: { children: React.ReactNode }) {
                 </Button>
               </div>
             </header>
-            <main className="flex-1 p-3 md:p-4 lg:p-6">
-              <div className="mx-auto max-w-7xl">
-                {children}
-              </div>
+            <main className="flex-1 p-3 md:p-4 lg:p-6 w-full">
+              {children}
             </main>
           </SidebarInset>
         </div>
