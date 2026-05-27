@@ -15,14 +15,32 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { useAuth } from '@/lib/auth-context';
+import { useAppSelector, useAppDispatch } from '@/lib/store/hooks';
+import { logout as logoutAction } from '@/lib/store/auth-slice';
+import { useRouter } from 'next/navigation';
 
 export function LandingNavbar() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [copied, setCopied] = useState(false);
   const pathname = usePathname();
-  const { developer, isLoading, logout } = useAuth();
+  const router = useRouter();
+  const { developer } = useAppSelector((state) => state.auth);
+  const dispatch = useAppDispatch();
+  const isLoading = false; // Auth is managed globally now
+
+  const logout = async () => {
+    try {
+      await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'https://sdk-gateway.urisocial.com'}/api/v1/auth/logout`, {
+        method: 'POST',
+        credentials: 'include',
+      });
+    } catch (error) {
+      console.error('Logout error:', error);
+    }
+    dispatch(logoutAction());
+    router.push('/login');
+  };
 
   useEffect(() => {
     const handleScroll = () => {

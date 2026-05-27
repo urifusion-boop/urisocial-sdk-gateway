@@ -14,12 +14,29 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
-import { useAuth } from '@/lib/auth-context';
+import { useAppSelector, useAppDispatch } from '@/lib/store/hooks';
+import { logout as logoutAction } from '@/lib/store/auth-slice';
+import { useRouter } from 'next/navigation';
 
 export function DeveloperNavbar() {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
-  const { developer, logout } = useAuth();
+  const router = useRouter();
+  const { developer } = useAppSelector((state) => state.auth);
+  const dispatch = useAppDispatch();
+
+  const logout = async () => {
+    try {
+      await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'https://sdk-gateway.urisocial.com'}/api/v1/auth/logout`, {
+        method: 'POST',
+        credentials: 'include',
+      });
+    } catch (error) {
+      console.error('Logout error:', error);
+    }
+    dispatch(logoutAction());
+    router.push('/login');
+  };
 
   const getInitials = () => {
     if (developer?.first_name && developer?.last_name) {
